@@ -1,6 +1,7 @@
 package verifiable
 
 import (
+	"fmt"
 	"crypto"
 	"encoding/base64"
 	"encoding/json"
@@ -22,6 +23,7 @@ type Presentation struct {
 }
 
 func generateBaseVP() *Presentation {
+	fmt.Println("presentation-generateBaseVP")
 	vp := &Presentation{
 		Context: []string{VpContext, ItsmeVpContext},
 		Type:    []string{VpType},
@@ -31,6 +33,7 @@ func generateBaseVP() *Presentation {
 }
 
 func newVpProof(signer signer.Signer, privateKey crypto.PrivateKey, issuerKeyId string, data []byte) (*Proof, error) {
+	fmt.Println("presentation-newVpProof")
 	sig, err := signer.Sign(data, privateKey)
 	if err != nil {
 		return nil, err
@@ -47,6 +50,7 @@ func newVpProof(signer signer.Signer, privateKey crypto.PrivateKey, issuerKeyId 
 }
 
 func NewPresentation(signer signer.Signer, holderPrivateKey crypto.PrivateKey, holderDID, holderKeyId string, vcs []Credential) (*Presentation, error) {
+	fmt.Println("presentation-NewPresentation")
 	vp := generateBaseVP()
 
 	vp.Id = holderDID

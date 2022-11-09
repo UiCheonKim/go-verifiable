@@ -37,6 +37,7 @@ type Proof struct {
 const credentialIdFormat = "https://itsme.id/credentials/%s"
 
 func generateBaseVc() *Credential {
+	fmt.Println("credential-generateBaseVc")
 	cred := &Credential{
 		Context:      []string{VcContext, ItsmeVcContext},
 		Type:         []string{VcType},
@@ -47,6 +48,7 @@ func generateBaseVc() *Credential {
 }
 
 func newVcProof(signer signer.Signer, issuerKeyID string, privateKey interface{}, data []byte) (*Proof, error) {
+	fmt.Println("credential-newVcProof")
 	sig, err := signer.Sign(data, privateKey)
 	if err != nil {
 		return nil, err
@@ -63,10 +65,11 @@ func newVcProof(signer signer.Signer, issuerKeyID string, privateKey interface{}
 }
 
 func NewCredential() {
-
+	fmt.Println("credential-NewCredential")
 }
 
 func NewSingleClaimCredential(signer signer.Signer, privateKey interface{}, holderDID, issuerKeyId, issuerName, credType, credId, keyName string, value interface{}, expiresAt time.Time) (*Credential, error) {
+	fmt.Println("credential-NewSingleClaimCredential")
 	vc := generateBaseVc()
 	vc.Id = fmt.Sprintf(credentialIdFormat, credId)
 	vc.Type = append(vc.Type, credType)

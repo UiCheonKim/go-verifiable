@@ -1,6 +1,7 @@
 package ecdsa
 
 import (
+	"fmt"
 	"crypto/sha256"
 	"errors"
 	"github.com/btcsuite/btcd/btcec"
@@ -12,6 +13,7 @@ var ES256k *SECP
 var _ signer.Signer = &SECP{}
 
 func init () {
+	fmt.Println("signer-ecdsa-secp256k1-init")
 	ES256k = &SECP{}
 }
 
@@ -23,14 +25,17 @@ const (
 )
 
 func (s *SECP) Name() string {
+	fmt.Println("signer-ecdsa-secp256k1-Name")
 	return name
 }
 
 func (s *SECP) Type() string {
+	fmt.Println("signer-ecdsa-secp256k1-Type")
 	return proofType
 }
 
 func (s *SECP) Sign(msg []byte, key interface{}) ([]byte, error) {
+	fmt.Println("signer-ecdsa-secp256k1-Sign")
 	privateKey, ok := key.(*btcec.PrivateKey)
 	if !ok {
 		return nil, errors.New("not secp256k1 private key")
@@ -47,6 +52,7 @@ func (s *SECP) Sign(msg []byte, key interface{}) ([]byte, error) {
 }
 
 func (s *SECP) Verify(msg []byte, signature []byte, key interface{}) bool {
+	fmt.Println("signer-ecdsa-secp256k1-Verify")
 	publicKey, ok := key.(*btcec.PublicKey)
 	if !ok {
 		return false

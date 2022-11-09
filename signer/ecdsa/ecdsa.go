@@ -1,6 +1,7 @@
 package ecdsa
 
 import (
+	"fmt"
 	"crypto"
 	ec "crypto/ecdsa"
 	"crypto/rand"
@@ -25,20 +26,24 @@ var (
 var _ signer.Signer = &ECDSA{}
 
 func init() {
+	fmt.Println("signer-ecdsa-ecdsa-init")
 	ES256 = &ECDSA{Hash: crypto.SHA256, AlgName: "ES256", ProofType: "EcdsaSecp256r1Signature2019"}
 	ES384 = &ECDSA{Hash: crypto.SHA384, AlgName: "ES384", ProofType: "EcdsaSecp384r1Signature2019"}
 	ES512 = &ECDSA{Hash: crypto.SHA512, AlgName: "ES512", ProofType: "EcdsaSecp521r1Signature2019"}
 }
 
 func (e *ECDSA) Name() string {
+	fmt.Println("signer-ecdsa-ecdsa-Name")
 	return e.AlgName
 }
 
 func (e *ECDSA) Type() string {
+	fmt.Println("signer-ecdsa-ecdsa-Type")
 	return e.ProofType
 }
 
 func (e *ECDSA) Sign(msg []byte, key interface{}) ([]byte, error) {
+	fmt.Println("signer-ecdsa-ecdsa-Sign")
 	privateKey, ok := key.(*ec.PrivateKey)
 	if !ok {
 		return nil, errors.New("not ecdsa private key")
@@ -77,6 +82,7 @@ func (e *ECDSA) Sign(msg []byte, key interface{}) ([]byte, error) {
 }
 
 func (e *ECDSA) Verify(msg []byte, signature []byte, key interface{}) bool {
+	fmt.Println("signer-ecdsa-ecdsa-Verify")
 	publicKey, ok := key.(*ec.PublicKey)
 	if !ok {
 		return false
